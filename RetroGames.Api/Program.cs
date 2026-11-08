@@ -9,8 +9,18 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+// Configuração do CORS (Permitir requisições do frontend React)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 // Add services to the container.
-builder.Services.AddControllers(); // Necessário para a criação de Controllers na API
+builder.Services.AddControllers(); // Regista os Controllers na API
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -22,6 +32,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Ativa o middleware do CORS
+app.UseCors("AllowReactApp");
 
 // Mapeamento dos Controllers da API
 app.MapControllers();
