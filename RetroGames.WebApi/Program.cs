@@ -1,5 +1,9 @@
 using DotNetEnv;
+using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
+using RetroGames.WebApi.ApiModels;
 using RetroGames.WebApi.Configuration;
+using RetroGames.WebApi.Filters;
 using RetroGames.WebApi.Middlewares;
 
 Env.TraversePath().Load();
@@ -19,7 +23,34 @@ builder.Services.AddProblemDetails();
 builder.Services.AddRepositorios(connectionString);
 builder.Services.AddServicosDeNegocio();
 
-builder.Services.AddControllers();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+builder.Services.AddControllers(opcoes =>
+{
+    opcoes.Filters.Add<FluentValidationFilter>();
+})
+.ConfigureApiBehaviorOptions(opcoes =>
+{
+    opcoes.InvalidModelStateResponseFactory = context =>
+    {
+        var errosPorCampo = context.ModelState
+            .Where(x => x.Value?.Errors.Count > 0)
+            .ToDictionary(
+                kvp => kvp.Key,
+                kvp => kvp.Value!.Errors.Select(e =>
+                    string.IsNullOrWhiteSpace(e.ErrorMessage) ? "Valor inválido." : e.ErrorMessage).ToArray());
+
+        var envelope = new RetroGamesResponseApiModel<Dictionary<string, string[]>>
+        {
+            ResponseCode = ResponseCodes.ERRO_VALIDACAO,
+            ErrorMessage = "Requisição malformada ou dados inválidos.",
+            Data = errosPorCampo
+        };
+
+        return new BadRequestObjectResult(envelope);
+    };
+});
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
