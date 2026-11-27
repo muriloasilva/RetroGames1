@@ -1,8 +1,10 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAutenticacao } from '../hooks/useAutenticacao'
+import { useCarrinho } from '../hooks/useCarrinho'
 
 export default function Layout() {
   const { usuario, estaLogado, eAdministrador, sair } = useAutenticacao()
+  const { quantidadeTotal } = useCarrinho()
   const navigate = useNavigate()
 
   async function fazerLogout() {
@@ -35,6 +37,16 @@ export default function Layout() {
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/catalogo">Catálogo</NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/carrinho">
+                    Carrinho <span className="badge rounded-pill text-bg-light">{quantidadeTotal}</span>
+                  </NavLink>
+                </li>
+                {estaLogado && !eAdministrador && (
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/meus-pedidos">Meus pedidos</NavLink>
+                  </li>
+                )}
                 {eAdministrador && (
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/admin/jogos">Jogos</NavLink>
@@ -51,9 +63,14 @@ export default function Layout() {
                     <button type="button" onClick={fazerLogout}>Sair</button>
                   </li>
                 ) : (
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/login">Entrar</Link>
-                  </li>
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/cadastro">Cadastrar</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/login">Entrar</Link>
+                    </li>
+                  </>
                 )}
               </ul>
             </div>

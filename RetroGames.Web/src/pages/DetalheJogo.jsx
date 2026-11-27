@@ -4,12 +4,14 @@ import { buscarJogoPorIdApi } from '../api/services'
 import { obterMensagemErro } from '../api/errors'
 import { MensagemCarregando, MensagemErro } from '../components/MensagensEstado'
 import { formatarPreco } from '../lib/formato'
+import { useCarrinho } from '../hooks/useCarrinho'
 
 export default function DetalheJogo() {
   const { id } = useParams()
   const [jogo, setJogo] = useState(null)
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState('')
+  const { adicionar } = useCarrinho()
 
   useEffect(() => {
     let ativo = true
@@ -87,6 +89,14 @@ export default function DetalheJogo() {
             <span>Preço</span>
             <strong>{formatarPreco(jogo.preco)}</strong>
           </div>
+          <button
+            type="button"
+            className="botao-buscar mt-3"
+            onClick={() => adicionar(jogo)}
+            disabled={jogo.estoque <= 0}
+          >
+            Adicionar ao carrinho
+          </button>
         </div>
       </article>
     </section>

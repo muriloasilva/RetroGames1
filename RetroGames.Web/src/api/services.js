@@ -30,6 +30,26 @@ export async function sairApi() {
   return response.data
 }
 
+export async function cadastrarUsuarioApi(dados) {
+  const response = await api.post('/Autenticacao/cadastrar', dados)
+  return response.data.data
+}
+
+export async function criarPedidoApi(itens) {
+  const response = await api.post('/Pedido', { itens })
+  return response.data.data
+}
+
+export async function listarMeusPedidosApi() {
+  const response = await api.get('/Pedido/meus')
+  return response.data.data
+}
+
+export async function buscarPedidoPorIdApi(id) {
+  const response = await api.get(`/Pedido/${id}`)
+  return response.data.data
+}
+
 export async function obterUsuarioAtualApi() {
   const response = await api.get('/Autenticacao/eu')
   return response.data.data

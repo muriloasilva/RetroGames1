@@ -9,17 +9,27 @@ import RotaProtegida from './components/RotaProtegida'
 import Plataformas from './pages/admin/Plataformas'
 import Jogos from './pages/admin/Jogos'
 import FormularioJogo from './pages/admin/FormularioJogo'
+import Cadastro from './pages/Cadastro'
+import Carrinho from './pages/Carrinho'
+import MeusPedidos from './pages/MeusPedidos'
+import { CarrinhoProvider } from './contexts/CarrinhoContext'
 
 function App() {
   return (
     <BrowserRouter>
       <AutenticacaoProvider>
-        <Routes>
+        <CarrinhoProvider>
+          <Routes>
         <Route element={<Layout />}>
           <Route index element={<Navigate to="/catalogo" replace />} />
           <Route path="/catalogo" element={<Catalogo />} />
           <Route path="/jogos/:id" element={<DetalheJogo />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/carrinho" element={<Carrinho />} />
+          <Route element={<RotaProtegida />}>
+            <Route path="/meus-pedidos" element={<MeusPedidos />} />
+          </Route>
           <Route element={<RotaProtegida somenteAdministrador />}>
             <Route path="/admin/jogos" element={<Jogos />} />
             <Route path="/admin/jogos/novo" element={<FormularioJogo />} />
@@ -28,7 +38,8 @@ function App() {
           </Route>
           <Route path="*" element={<NaoEncontrada />} />
         </Route>
-        </Routes>
+          </Routes>
+        </CarrinhoProvider>
       </AutenticacaoProvider>
     </BrowserRouter>
   )

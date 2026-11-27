@@ -18,6 +18,9 @@ public static class InjecaoDependenciaConfig
         services.AddScoped<IGeneroRepository, GeneroRepository>();
         services.AddScoped<ICondicaoJogoRepository, CondicaoJogoRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        services.AddScoped<IPedidoRepository, PedidoRepository>();
+        services.AddScoped<IItemPedidoRepository, ItemPedidoRepository>();
+        services.AddScoped<ISituacaoPedidoRepository, SituacaoPedidoRepository>();
         services.AddScoped<IRepositorySet, RepositorySet>();
 
         return services;
@@ -31,6 +34,8 @@ public static class InjecaoDependenciaConfig
         services.AddScoped<IJogoService, JogoService>();
         services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
         services.AddScoped<IAutenticacaoService, AutenticacaoService>();
+        services.AddScoped<IUsuarioService, UsuarioService>();
+        services.AddScoped<IPedidoService, PedidoService>();
         services.AddHttpContextAccessor();
         services.AddScoped<IUsuarioAtualService, UsuarioAtualService>();
 

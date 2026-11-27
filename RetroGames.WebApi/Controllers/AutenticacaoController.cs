@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using RetroGames.Model.Constantes;
+using RetroGames.Model.Model;
 using RetroGames.Services;
 using RetroGames.WebApi.ApiModels;
 using RetroGames.WebApi.Extensions;
@@ -15,10 +16,37 @@ namespace RetroGames.WebApi.Controllers;
 public class AutenticacaoController : ControllerBase
 {
     private readonly IAutenticacaoService _autenticacaoService;
+    private readonly IUsuarioService _usuarioService;
 
-    public AutenticacaoController(IAutenticacaoService autenticacaoService)
+    public AutenticacaoController(IAutenticacaoService autenticacaoService, IUsuarioService usuarioService)
     {
         _autenticacaoService = autenticacaoService;
+        _usuarioService = usuarioService;
+    }
+
+    [AllowAnonymous]
+    [HttpPost("cadastrar")]
+    public async Task<IActionResult> Cadastrar(CadastrarUsuarioRequestApiModel request)
+    {
+        var usuario = await _usuarioService.CadastrarAsync(new Usuario
+        {
+            Nome = request.Nome,
+            Email = request.Email
+        }, request.Senha);
+
+        var dados = new UsuarioResponseApiModel
+        {
+            Id = usuario.Id,
+            Nome = usuario.Nome,
+            Email = usuario.Email,
+            Perfil = "Cliente"
+        };
+
+        return Ok(new RetroGamesResponseApiModel<UsuarioResponseApiModel>
+        {
+            ResponseCode = ResponseCodes.SUCESSO,
+            Data = dados
+        });
     }
 
     [AllowAnonymous]

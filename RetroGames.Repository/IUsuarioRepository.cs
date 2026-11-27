@@ -7,5 +7,6 @@ public interface IUsuarioRepository
     Task<Usuario?> BuscarPorEmailAsync(string email);
     Task<Usuario?> BuscarPorIdAsync(int id);
     Task<bool> ExisteAdministradorAsync();
+    Task<bool> ExisteComEmailAsync(string email);
     Task<int> InserirAsync(Usuario usuario);
 }

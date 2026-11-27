@@ -16,4 +16,5 @@ public interface IJogoRepository
     Task<int> InserirAsync(Jogo jogo);
     Task AlterarAsync(Jogo jogo);
     Task DesativarAsync(int id);
+    Task AlterarEstoqueAsync(int id, int quantidade);
 }

@@ -168,6 +168,20 @@ public class JogoRepository : RepositoryBase, IJogoRepository
         await ExecutarGravacaoAsync(comando);
     }
 
+    public async Task AlterarEstoqueAsync(int id, int quantidade)
+    {
+        const string sql = @"
+            UPDATE tb_jogo
+            SET qt_estoque = @quantidade
+            WHERE co_seq_jogo = @id;";
+
+        await using var conexao = await AbrirConexaoAsync();
+        await using var comando = CriarComando(conexao, sql);
+        AdicionarParametro(comando, "@id", id);
+        AdicionarParametro(comando, "@quantidade", quantidade);
+        await ExecutarGravacaoAsync(comando);
+    }
+
     private static void PreencherFiltros(
         MySqlCommand comando,
         string? busca,

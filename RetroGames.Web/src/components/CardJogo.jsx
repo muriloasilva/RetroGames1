@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import { formatarPreco } from '../lib/formato'
+import { useCarrinho } from '../hooks/useCarrinho'
 
 export default function CardJogo({ jogo }) {
+  const { adicionar } = useCarrinho()
   return (
     <article className="card-jogo">
       <div className="card-jogo-cabecalho">
@@ -17,6 +19,14 @@ export default function CardJogo({ jogo }) {
       </div>
       <div className="card-jogo-rodape">
         <strong>{formatarPreco(jogo.preco)}</strong>
+        <button
+          type="button"
+          className="botao-detalhe"
+          onClick={() => adicionar(jogo)}
+          disabled={jogo.estoque <= 0}
+        >
+          Adicionar
+        </button>
         <Link className="botao-detalhe" to={`/jogos/${jogo.id}`}>
           Ver detalhes
         </Link>

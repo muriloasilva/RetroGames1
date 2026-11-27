@@ -8,6 +8,9 @@ public class RepositorySet : IRepositorySet
     public IGeneroRepository Genero { get; }
     public ICondicaoJogoRepository CondicaoJogo { get; }
     public IUsuarioRepository Usuario { get; }
+    public IPedidoRepository Pedido { get; }
+    public IItemPedidoRepository ItemPedido { get; }
+    public ISituacaoPedidoRepository SituacaoPedido { get; }
 
     public RepositorySet(RepositoryConfig config)
     {
@@ -17,5 +20,8 @@ public class RepositorySet : IRepositorySet
         Genero = new GeneroRepository(config);
         CondicaoJogo = new CondicaoJogoRepository(config);
         Usuario = new UsuarioRepository(config);
+        Pedido = new PedidoRepository(config);
+        ItemPedido = new ItemPedidoRepository(config);
+        SituacaoPedido = new SituacaoPedidoRepository(config);
     }
 }

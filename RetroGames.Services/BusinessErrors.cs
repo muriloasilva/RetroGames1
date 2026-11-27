@@ -21,4 +21,19 @@ public static class BusinessErrors
 
     public static readonly BusinessError GeneroNaoEncontrado =
         new(105, "Gênero não encontrado.", HttpStatusCode.NotFound);
+
+    public static readonly BusinessError EmailJaCadastrado =
+        new(106, "Já existe uma conta com este e-mail.", HttpStatusCode.Conflict);
+
+    public static readonly BusinessError PedidoNaoEncontrado =
+        new(109, "Pedido não encontrado.", HttpStatusCode.NotFound);
+
+    public static readonly BusinessError JogoIndisponivel =
+        new(110, "Um ou mais jogos não estão disponíveis para venda.", HttpStatusCode.Conflict);
+
+    public static readonly BusinessError EstoqueInsuficiente =
+        new(111, "Estoque insuficiente.", HttpStatusCode.Conflict);
+
+    public static readonly BusinessError SituacaoPedidoNaoEncontrada =
+        new(112, "Situação de pedido não encontrada.", HttpStatusCode.NotFound);
 }

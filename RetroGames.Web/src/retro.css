@@ -485,6 +485,46 @@ button, input, select { font: inherit; }
 
 .linha-inativo { color: #777d84; background: #f4f4f1; }
 
+.quantidade-carrinho {
+  width: 72px;
+  height: 38px;
+  border: 1px solid #babdb7;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.carrinho-finalizar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--yellow);
+  background: #fff;
+  margin-top: 16px;
+  padding: 16px;
+}
+
+.pedido-cliente {
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--cyan);
+  background: #fff;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.pedido-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pedido-cliente ul { margin: 12px 0; padding-left: 18px; }
+
+@media (max-width: 600px) {
+  .carrinho-finalizar { align-items: stretch; flex-direction: column; }
+}
+
 .formulario-jogo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .campo-descricao,
 .campo-generos,
