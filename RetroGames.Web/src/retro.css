@@ -343,6 +343,153 @@ button, input, select { font: inherit; }
 .pagina-nao-encontrada > span { color: var(--red); font-family: Georgia, serif; font-size: 6rem; line-height: 1; }
 .pagina-nao-encontrada .botao-detalhe { margin-top: 20px; }
 
+.menu-usuario {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 12px;
+  color: #dfe2e6;
+}
+
+.menu-usuario button {
+  border: 1px solid #555b63;
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  min-height: 36px;
+  padding: 0 10px;
+}
+
+.pagina-login {
+  min-height: calc(100vh - 64px);
+  display: grid;
+  place-content: center;
+  padding: 24px;
+}
+
+.formulario-login {
+  width: min(390px, calc(100vw - 48px));
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--cyan);
+  background: #fff;
+  padding: 28px;
+}
+
+.formulario-login h1 { margin: 0 0 20px; font-family: Georgia, serif; }
+.formulario-login label { display: block; margin: 12px 0 6px; font-weight: 800; }
+.formulario-login input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #babdb7;
+  border-radius: 4px;
+  padding: 0 10px;
+}
+.formulario-login .botao-buscar { width: 100%; margin-top: 18px; }
+
+.mensagem-erro-inline {
+  border: 1px solid #dcc2bb;
+  border-radius: 4px;
+  background: #fff7f4;
+  color: #9d3425;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+.admin-pagina {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0 64px;
+}
+
+.admin-cabecalho {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.admin-cabecalho h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+}
+
+.admin-cabecalho a { display: inline-flex; align-items: center; }
+
+.formulario-admin {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--cyan);
+  background: #fff;
+  padding: 18px;
+  margin-bottom: 24px;
+}
+
+.formulario-admin label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.formulario-admin input,
+.formulario-admin select,
+.formulario-admin textarea {
+  width: 100%;
+  border: 1px solid #babdb7;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ink);
+  padding: 8px 10px;
+}
+
+.formulario-admin input,
+.formulario-admin select { height: 44px; }
+.formulario-admin textarea { min-height: 120px; resize: vertical; }
+
+.acoes-formulario {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+}
+
+.erro-campo { display: block; color: #b23a29; margin-top: 5px; }
+
+.tabela-admin {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.tabela-admin table { width: 100%; border-collapse: collapse; }
+.tabela-admin th,
+.tabela-admin td { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; }
+.tabela-admin th { background: #eceae3; }
+.tabela-admin td:last-child { width: 120px; white-space: nowrap; }
+.tabela-admin td:last-child button,
+.tabela-admin td:last-child a {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ink);
+  margin-right: 6px;
+  text-decoration: none;
+}
+
+.linha-inativo { color: #777d84; background: #f4f4f1; }
+
+.formulario-jogo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.campo-descricao,
+.campo-generos,
+.campo-acoes { grid-column: 1 / -1; }
+
 @media (max-width: 900px) {
   .filtros { grid-template-columns: 1fr 1fr; }
   .campo-busca { grid-column: 1 / -1; }
@@ -352,6 +499,13 @@ button, input, select { font: inherit; }
 }
 
 @media (max-width: 600px) {
+  .admin-pagina { width: min(100% - 24px, 1180px); padding-top: 28px; }
+  .formulario-admin,
+  .formulario-jogo { grid-template-columns: 1fr; }
+  .campo-descricao,
+  .campo-generos,
+  .campo-acoes { grid-column: auto; }
+  .admin-cabecalho { align-items: start; }
   .catalogo-pagina, .pagina-detalhe { width: min(100% - 24px, 1180px); padding-top: 28px; }
   .catalogo-cabecalho { align-items: start; }
   .catalogo-cabecalho h1 { font-size: 2.6rem; }

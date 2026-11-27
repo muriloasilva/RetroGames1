@@ -1,6 +1,15 @@
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { useAutenticacao } from '../hooks/useAutenticacao'
 
 export default function Layout() {
+  const { usuario, estaLogado, eAdministrador, sair } = useAutenticacao()
+  const navigate = useNavigate()
+
+  async function fazerLogout() {
+    await sair()
+    navigate('/catalogo', { replace: true })
+  }
+
   return (
     <>
       <header className="site-header">
@@ -26,6 +35,26 @@ export default function Layout() {
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/catalogo">Catálogo</NavLink>
                 </li>
+                {eAdministrador && (
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/admin/jogos">Jogos</NavLink>
+                  </li>
+                )}
+                {eAdministrador && (
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/admin/plataformas">Plataformas</NavLink>
+                  </li>
+                )}
+                {estaLogado ? (
+                  <li className="nav-item menu-usuario">
+                    <span>{usuario.nome}</span>
+                    <button type="button" onClick={fazerLogout}>Sair</button>
+                  </li>
+                ) : (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">Entrar</Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
