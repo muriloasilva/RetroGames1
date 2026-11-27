@@ -5,6 +5,7 @@ using RetroGames.WebApi.ApiModels;
 using RetroGames.WebApi.Configuration;
 using RetroGames.WebApi.Filters;
 using RetroGames.WebApi.Middlewares;
+using RetroGames.Services;
 
 Env.TraversePath().Load();
 
@@ -22,6 +23,7 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddRepositorios(connectionString);
 builder.Services.AddServicosDeNegocio();
+builder.Services.AddAutenticacao();
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
@@ -55,15 +57,31 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+using (var escopo = app.Services.CreateScope())
+{
+    var autenticacao = escopo.ServiceProvider.GetRequiredService<IAutenticacaoService>();
+    var email = app.Configuration["AdminInicial:Email"];
+    var senha = app.Configuration["AdminInicial:Senha"];
+
+    await autenticacao.GarantirAdministradorInicialAsync(email ?? string.Empty, senha ?? string.Empty);
+}
+
 app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "RetroGames API v1");
     });
+}
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi().AllowAnonymous();
 }
 
 app.MapControllers();

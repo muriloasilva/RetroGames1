@@ -17,6 +17,7 @@ public class JogoService : IJogoService
         string? busca = null,
         int? idPlataforma = null,
         int? idGenero = null,
+        bool incluirInativos = false,
         int pagina = 1,
         int tamanhoPagina = 10)
     {
@@ -36,7 +37,7 @@ public class JogoService : IJogoService
             busca: busca,
             idPlataforma: idPlataforma,
             idsJogos: idsJogosFiltro,
-            incluirInativos: false,
+            incluirInativos: incluirInativos,
             pagina: pagina,
             tamanhoPagina: tamanhoPagina);
 
@@ -44,10 +45,10 @@ public class JogoService : IJogoService
         return (detalhes, total);
     }
 
-    public async Task<JogoDetalheServiceModel> BuscarPorIdAsync(int id)
+    public async Task<JogoDetalheServiceModel> BuscarPorIdAsync(int id, bool incluirInativos = false)
     {
         var jogo = await _repositorio.Jogo.BuscarPorIdAsync(id);
-        if (jogo is null)
+        if (jogo is null || (!incluirInativos && !jogo.Ativo))
         {
             throw new BusinessRuleException(BusinessErrors.JogoNaoEncontrado);
         }
